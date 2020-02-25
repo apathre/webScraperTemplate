@@ -14,32 +14,26 @@ var dataArray=[];
 
 app.get('/fetch',(req,res)=>{
     for(var i=10001;i<10218;i+=10){
-    //console.log('i is:',i);
     urlList.push({urls:url1+i+url2});
-  }
-  //console.log('list of URLs:',urlList);
+    }
   
   Promise.map(urlList,async (url)=>{
       //console.log('url:',url.urls);
       return ssData = await axios(url.urls)
       .then(resp=>{
         const html=resp.data;
-        //console.log('html is:',html.aaData);
+        
         html.aaData.forEach((data)=>{
           let sLink=data["Link"].slice(9,46);
-          //console.log('char at 46:',sLink.substr(sLink.length-1));
           var fLink=sLink;
-          if(sLink.substr(sLink.length-1)=="'"){
-           
-            var fLink=sLink.slice(0,sLink.length-1);
-            
+          if(sLink.substr(sLink.length-1)=="'"){    
+            var fLink=sLink.slice(0,sLink.length-1);    
           }
           
           linkArray.push(fLink);
         }
         );//close forEach
-        //console.log(linkArray);
-        //console.log('count of linkArray is:',linkArray.length);
+        
       })
       .catch((err)=>{
         console.log(err);
@@ -47,8 +41,6 @@ app.get('/fetch',(req,res)=>{
       
     })//close promise map
     .then(()=>{
-      //console.log('ss:');
-      
       for(var i=0;i<linkArray.length;i++){
         let tt=parentURL+linkArray[i].toString();
         console.log(tt);
@@ -65,10 +57,7 @@ app.get('/fetch',(req,res)=>{
               var dd=fg.concat(mnrl);
               console.log(dd);
               dataArray.push(dd);
-
-          }
-         
-        
+          }    
       })
       .catch((errtt)=>{
         console.log(errtt);
