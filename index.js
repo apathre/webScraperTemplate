@@ -13,12 +13,12 @@ var linkArray=[];
 var dataArray=[];
 
 app.get('/fetch',(req,res)=>{
-    for(var i=10001;i<10218;i+=10){
+    for(var i=0;i<10218;i+=10){
     urlList.push({urls:url1+i+url2});
     }
   
   Promise.map(urlList,async (url)=>{
-      //console.log('url:',url.urls);
+      
       return ssData = await axios(url.urls)
       .then(resp=>{
         const html=resp.data;
@@ -61,7 +61,7 @@ app.get('/fetch',(req,res)=>{
       })
       .catch((errtt)=>{
         console.log(errtt);
-      });
+      });  //close catch
       }
       console.log(dataArray);
     })
@@ -72,10 +72,10 @@ app.get('/fetch',(req,res)=>{
     .catch((err1)=>{
       console.log(err1);
     })
-  })//close app.get
+  })//close app.get for fetch
 app.get('/',(req,res)=>{
   res.send('working');
-})
+}) //close app.get root
 
 app.listen(8080);
 console.log('server running on Port 8080');
